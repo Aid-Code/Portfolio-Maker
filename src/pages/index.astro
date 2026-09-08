@@ -25,8 +25,6 @@ import Layout from '../layouts/Layout.astro';
                 <button class="carousel-btn btn-prev" aria-label="Anterior" style="left: 0;">&#8249;</button>
                 
                 <div class="carousel-track" id="portfolio-track" style="display: flex; gap: 2rem; align-items: stretch;">
-                    
-                    <!-- GRUPO 1 (ORIGINALES) -->
                     <div class="card" style="flex: 0 0 320px;">
                         <img src="/img/atom-preview.jpg" alt="Robot Sumo Atom">
                         <h3>Proyecto AT0M</h3>
@@ -45,27 +43,6 @@ import Layout from '../layouts/Layout.astro';
                         <p>6to puesto y clasificación internacional a México. Optimización técnica para alto rendimiento.</p>
                         <a href="/portfolio" class="btn" style="width: 100%; margin-top: auto;">Ver Más</a>
                     </div>
-
-                    <!-- GRUPO 2 (CLONES INVISIBLES PARA EVITAR EL "POP-UP") -->
-                    <div class="card" style="flex: 0 0 320px;">
-                        <img src="/img/atom-preview.jpg" alt="Robot Sumo Atom">
-                        <h3>Proyecto AT0M</h3>
-                        <p>Diseño integral de robot sumo autónomo de competencia.</p>
-                        <a href="/proyectos/proyecto-atom" class="btn" style="width: 100%; margin-top: auto;">Ver Detalles</a>
-                    </div>
-                    <div class="card" style="flex: 0 0 320px;">
-                        <img src="/img/diseño-robokids-preview.png" alt="Escuela Tekné">
-                        <h3>Docente de Robótica</h3>
-                        <p>Diseño de currícula enfocada en cultura Maker.</p>
-                        <a href="/portfolio" class="btn" style="width: 100%; margin-top: auto;">Ver Más</a>
-                    </div>
-                    <div class="card" style="flex: 0 0 320px;">
-                        <img src="/img/ftc-preview.jpeg" alt="Mentoreo FTC">
-                        <h3>RBK7FTC - Mentoreo</h3>
-                        <p>6to puesto y clasificación internacional a México. Optimización técnica para alto rendimiento.</p>
-                        <a href="/portfolio" class="btn" style="width: 100%; margin-top: auto;">Ver Más</a>
-                    </div>
-
                 </div>
                 
                 <button class="carousel-btn btn-next" aria-label="Siguiente" style="right: 0;">&#8250;</button>
@@ -145,83 +122,89 @@ import Layout from '../layouts/Layout.astro';
             });
         }
 
-        // --- 2. CARRUSEL INFINITO A PRUEBA DE FALLOS ---
-        const track = document.getElementById('portfolio-track');
-        const btnPrev = document.querySelector('.btn-prev');
-        const btnNext = document.querySelector('.btn-next');
+        // --- 2. CARRUSEL MARQUEE INFINITO (CONTINUO Y SUAVE) ---
+        const wrapper = document.querySelector('.carousel-wrapper');
 
-        if (track) {
-            let isMoving = false;
-            const EASE = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+        if (track && wrapper) {
+            // Guardamos las tarjetas "reales" antes de clonar nada
+            const originalCards = Array.from(track.children);
+            const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 0;
 
-            // Lee el gap real del CSS de forma dinámica
-            const getGap = () => {
-                const g = window.getComputedStyle(track).columnGap || window.getComputedStyle(track).gap;
-                return parseFloat(g) || 0;
-            };
-            const getMoveAmount = () => track.firstElementChild.offsetWidth + getGap();
+            let uniqueWidth = 0;
 
-            // Espera el fin de la animación del TRACK, ignorando el burbujeo de las cards
-            const onTrackEnd = (cb) => {
-                const handler = (e) => {
-                    if (e.target !== track || e.propertyName !== 'transform') return;
-                    track.removeEventListener('transitionend', handler);
-                    clearTimeout(fallback);
-                    cb();
-                };
-                // Red de seguridad si el navegador pierde el foco
-                const fallback = setTimeout(() => {
-                    track.removeEventListener('transitionend', handler);
-                    cb();
-                }, 1000);
-                track.addEventListener('transitionend', handler);
-            };
+            // Calcula cuántas copias hacen falta para llenar la pantalla (funciona con 2 o con 30 proyectos)
+            function ensureEnoughClones() {
+                // Limpia clones previos (por si cambia el tamaño de ventana)
+                track.querySelectorAll('[data-clone="true"]').forEach(el => el.remove());
 
-            // Aplica un transform sin animar garantizando el renderizado
-            const setInstant = (value) => new Promise(resolve => {
-                track.style.transition = 'none';
-                track.style.transform = value;
-                requestAnimationFrame(() => requestAnimationFrame(resolve));
+                uniqueWidth = originalCards.reduce((acc, el) => acc + el.getBoundingClientRect().width + gap, 0);
+                const wrapperWidth = wrapper.getBoundingClientRect().width;
+
+                // Suficientes copias para cubrir 2 pantallas de ancho (buffer para que nunca se vea vacío)
+                const copiesNeeded = Math.max(1, Math.ceil((wrapperWidth * 2) / uniqueWidth));
+
+                for (let i = 0; i < copiesNeeded; i++) {
+                    originalCards.forEach(card => {
+                        const clone = card.cloneNode(true);
+                        clone.setAttribute('data-clone', 'true');
+                        clone.setAttribute('aria-hidden', 'true');
+                        clone.querySelectorAll('a').forEach(a => a.setAttribute('tabindex', '-1'));
+                        track.appendChild(clone);
+                    });
+                }
+            }
+
+            ensureEnoughClones();
+
+            let offset = 0;
+            let target = null;      // cuando no es null, estamos "frenando" hacia un punto (click en flecha)
+            let paused = false;
+            const AUTO_SPEED = 0.4; // velocidad del deslizamiento automático (px por frame)
+
+            function frame() {
+                if (target !== null) {
+                    const diff = target - offset;
+                    if (Math.abs(diff) < 0.5) {
+                        offset = target;
+                        target = null;
+                    } else {
+                        offset += diff * 0.12; // easing suave hacia el target
+                    }
+                } else if (!paused) {
+                    offset -= AUTO_SPEED;
+                }
+
+                // Wrap infinito: al pasar el ancho de un set completo, reseteamos sin que se note
+                if (offset <= -uniqueWidth) offset += uniqueWidth;
+                if (offset > 0) offset -= uniqueWidth;
+
+                track.style.transform = `translateX(${offset}px)`;
+                requestAnimationFrame(frame);
+            }
+            requestAnimationFrame(frame);
+
+            wrapper.addEventListener('mouseenter', () => paused = true);
+            wrapper.addEventListener('mouseleave', () => paused = false);
+
+            function stepWidth() {
+                return originalCards[0].getBoundingClientRect().width + gap;
+            }
+
+            btnNext.addEventListener('click', () => {
+                const base = target !== null ? target : offset;
+                target = base - stepWidth();
             });
 
-            const moveNext = () => {
-                if (isMoving) return;
-                isMoving = true;
+            btnPrev.addEventListener('click', () => {
+                const base = target !== null ? target : offset;
+                target = base + stepWidth();
+            });
 
-                track.style.transition = EASE;
-                track.style.transform = `translateX(-${getMoveAmount()}px)`;
-
-                onTrackEnd(async () => {
-                    track.appendChild(track.firstElementChild);
-                    await setInstant('translateX(0)');
-                    isMoving = false;
-                });
-            };
-
-            const movePrev = async () => {
-                if (isMoving) return;
-                isMoving = true;
-
-                track.prepend(track.lastElementChild);
-                await setInstant(`translateX(-${getMoveAmount()}px)`);
-
-                track.style.transition = EASE;
-                track.style.transform = 'translateX(0)';
-
-                onTrackEnd(() => { isMoving = false; });
-            };
-
-            let autoScroll = setInterval(moveNext, 4000);
-            const resetScroll = () => {
-                clearInterval(autoScroll);
-                autoScroll = setInterval(moveNext, 4000);
-            };
-
-            track.addEventListener('mouseenter', () => clearInterval(autoScroll));
-            track.addEventListener('mouseleave', resetScroll);
-
-            btnNext.addEventListener('click', () => { moveNext(); resetScroll(); });
-            btnPrev.addEventListener('click', () => { movePrev(); resetScroll(); });
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(ensureEnoughClones, 200);
+            });
         }
     </script>
 </Layout>
