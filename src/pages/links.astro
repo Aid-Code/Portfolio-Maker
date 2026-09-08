@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout 
+    title="Links | Aiden" 
+    bodyStyle="background-image: none; background-color: var(--bg-color);" 
+    hideNavAndFooter={true}
+>
+    <main class="linktree-container">
+        <img src="/img/foto-perfil.jpg" alt="Aiden" class="profile-pic">
+        <h1 style="font-size: 1.8rem; margin-bottom: 0.5rem;">@Aiden_Dev</h1>
+        <p style="color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1rem;">Electrónica, Código & Cultura Maker</p>
+
+        <div style="display: flex; flex-direction: column; gap: 1.2rem; padding: 0 1rem;">
+            <a href="https://chat.whatsapp.com/JLnT97eBBloLlQG1fcyyiH" target="_blank" class="btn btn-fill" style="padding: 1.2rem; font-size: 1.1rem; border-radius: 8px;">
+                💬 Unirse a la Comunidad Maker
+            </a>
+            <a href="/" class="btn" style="padding: 1rem; border-radius: 8px;">Portfolio de Proyectos</a>
+            <a href="/tienda" class="btn" style="padding: 1rem; border-radius: 8px;">Tienda de Hardware</a>
+            <a href="/#contacto" target="_blank" class="btn">Contactarse</a>
+            <a href="https://github.com/Aid-Code" target="_blank" class="btn" style="padding: 1rem; border-radius: 8px; border-color: var(--text-muted); color: var(--text-muted);">
+                GitHub (Proyectos Open Source)
+            </a>
+        </div>
+    </main>
+</Layout>

@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Catálogo de Hardware | Aiden">
+    <main style="padding-top: 120px;">
+        <section>
+            <h1 class="section-title"><span>02.</span> Catálogo de Hardware</h1>
+            <p style="color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem; max-width: 800px;">
+                Desarrollos propios testeados en entornos reales. Todos los módulos se fabrican <strong>a pedido</strong> para garantizar la mejor calidad. Podés encargar desde la PCB desnuda hasta el módulo ensamblado y listo para usar.
+            </p>
+
+            <div class="grid">
+                <div class="card store-card">
+                    <img src="/img/titancore.png" alt="TitanCore 7960">
+                    <h3>TitanCore 7960</h3>
+                    <p>Driver de motores de alto rendimiento optimizado para robótica pesada y de combate. Diseño de PCB en 2 capas.</p>
+                    <div class="tech-stack">
+                        <span>On-Demand</span> <span>Custom H-Bridge</span>
+                    </div>
+                    <span class="price" style="font-size: 1.2rem; color: var(--text-muted);">A partir de USD $5.00</span>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px; margin-top: auto;">
+                        <a href="/producto-driver" class="btn btn-fill" style="width: 100%;">Configurar Encargo</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>

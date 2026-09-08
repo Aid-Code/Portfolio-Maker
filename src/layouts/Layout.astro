@@ -1,0 +1,92 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// Propiedades que le podemos pasar a la plantilla desde cada página
+interface Props {
+    title: string;
+    bodyClass?: string;
+    bodyStyle?: string;
+    hideNavAndFooter?: boolean;
+}
+
+const { title, bodyClass = "", bodyStyle = "", hideNavAndFooter = false } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{title}</title>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <!-- Slot para inyectar scripts específicos (como el visor 3D) -->
+        <slot name="head" /> 
+        <!-- Script del Tema -->
+        <script is:inline>
+            const theme = (() => {
+                if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+                    return localStorage.getItem('theme');
+                }
+                if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    return 'light';
+                }
+                return 'dark';
+            })();
+            
+            if (theme === 'light') {
+                document.documentElement.classList.add('light-theme');
+            } else {
+                document.documentElement.classList.remove('light-theme');
+            }
+            window.localStorage.setItem('theme', theme);
+        </script>
+    </head>
+    <body class={bodyClass} style={bodyStyle}>
+        
+        <!-- Lógica de Parallax: Solo se inyecta si le pasamos la clase 'home-body' -->
+        {bodyClass === 'home-body' && (
+            <div class="parallax-container">
+                <div class="parallax-bg" style="background-image: url('/img/fondo-taller.jpg');"></div>
+                <div class="parallax-overlay"></div>
+            </div>
+        )}
+
+        <!-- Envolvemos el contenido si hay parallax -->
+        <div class={bodyClass === 'home-body' ? 'main-content-wrapper' : ''}>
+            
+            {!hideNavAndFooter && <Header />}
+            
+            <slot /> <!-- Aquí va el contenido único de cada página -->
+            
+            {!hideNavAndFooter && <Footer />}
+            
+        </div>
+        <script is:inline>
+            document.addEventListener('DOMContentLoaded', () => {
+                const themeToggle = document.getElementById('theme-toggle');
+                if(themeToggle) {
+                    themeToggle.addEventListener('click', () => {
+                        const isLight = document.documentElement.classList.toggle('light-theme');
+                        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                    });
+                }
+            });
+        </script>
+
+        <script is:inline>
+            document.addEventListener('DOMContentLoaded', () => {
+                const themeCheckbox = document.getElementById('theme-toggle-checkbox');
+                if (themeCheckbox) {
+                    themeCheckbox.checked = document.documentElement.classList.contains('light-theme');
+                    themeCheckbox.addEventListener('change', (e) => {
+                        const isLight = e.target.checked;
+                        if (isLight) document.documentElement.classList.add('light-theme');
+                        else document.documentElement.classList.remove('light-theme');
+                        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

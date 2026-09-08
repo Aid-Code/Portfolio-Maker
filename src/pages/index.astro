@@ -1,0 +1,227 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Aiden | Hardware & Software Design" bodyClass="home-body">
+    <main>
+        <!-- SECCIÓN HERO -->
+        <section class="hero" style="height: 100vh; display: flex; flex-direction: column; justify-content: center;">
+            <p class="mono" style="color: var(--accent-primary); margin-bottom: 1rem;">&gt; Inicializando sistema...</p>
+            <h1 style="font-size: 4rem; margin-bottom: 1rem; background: -webkit-linear-gradient(0deg, var(--accent-primary), #00aaff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Hola, soy Aiden.</h1>
+            <h2 style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 2rem;">Diseñador de Hardware & Software.</h2>
+            <p style="max-width: 600px; color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem;">
+                Estudiante de Ingeniería Electrónica en UTN e instructor de robótica. Especializado en electrónica DIY, diseño de PCBs y sistemas embebidos. Transformo esquemáticos en realidades físicas, desde la mesa de dibujo hasta la línea de ensamblaje.
+            </p>
+            <div class="hero-buttons">
+                <a href="/archivos/Aiden_CV.pdf" download="Aiden_CV_Hardware_Dev.pdf" class="btn btn-fill">[↓] Descargar CV</a>
+                <a href="/tienda" class="btn">Ir a la Tienda</a>
+                <a href="/contacto" class="btn">Contactarse</a>
+            </div>
+        </section>
+
+        <!-- 01. PORTFOLIO (CARRUSEL INFINITO FLUIDO) -->
+        <section id="portfolio">
+            <h2 class="section-title"><span>01.</span> Portfolio</h2>
+            <div class="carousel-wrapper" style="overflow: hidden; width: 100%; padding: 10px 0;">
+                <button class="carousel-btn btn-prev" aria-label="Anterior" style="left: 0;">&#8249;</button>
+                
+                <div class="carousel-track" id="portfolio-track" style="display: flex; gap: 2rem; align-items: stretch;">
+                    
+                    <!-- GRUPO 1 (ORIGINALES) -->
+                    <div class="card" style="flex: 0 0 320px;">
+                        <img src="/img/atom-preview.jpg" alt="Robot Sumo Atom">
+                        <h3>Proyecto AT0M</h3>
+                        <p>Diseño integral de robot sumo autónomo de competencia.</p>
+                        <a href="/proyectos/proyecto-atom" class="btn" style="width: 100%; margin-top: auto;">Ver Detalles</a>
+                    </div>
+                    <div class="card" style="flex: 0 0 320px;">
+                        <img src="/img/diseño-robokids-preview.png" alt="Escuela Tekné">
+                        <h3>Docente de Robótica</h3>
+                        <p>Diseño de currícula enfocada en cultura Maker.</p>
+                        <a href="/portfolio" class="btn" style="width: 100%; margin-top: auto;">Ver Más</a>
+                    </div>
+                    <div class="card" style="flex: 0 0 320px;">
+                        <img src="/img/ftc-preview.jpeg" alt="Mentoreo FTC">
+                        <h3>RBK7FTC - Mentoreo</h3>
+                        <p>6to puesto y clasificación internacional a México. Optimización técnica para alto rendimiento.</p>
+                        <a href="/portfolio" class="btn" style="width: 100%; margin-top: auto;">Ver Más</a>
+                    </div>
+
+                    <!-- GRUPO 2 (CLONES INVISIBLES PARA EVITAR EL "POP-UP") -->
+                    <div class="card" style="flex: 0 0 320px;">
+                        <img src="/img/atom-preview.jpg" alt="Robot Sumo Atom">
+                        <h3>Proyecto AT0M</h3>
+                        <p>Diseño integral de robot sumo autónomo de competencia.</p>
+                        <a href="/proyectos/proyecto-atom" class="btn" style="width: 100%; margin-top: auto;">Ver Detalles</a>
+                    </div>
+                    <div class="card" style="flex: 0 0 320px;">
+                        <img src="/img/diseño-robokids-preview.png" alt="Escuela Tekné">
+                        <h3>Docente de Robótica</h3>
+                        <p>Diseño de currícula enfocada en cultura Maker.</p>
+                        <a href="/portfolio" class="btn" style="width: 100%; margin-top: auto;">Ver Más</a>
+                    </div>
+                    <div class="card" style="flex: 0 0 320px;">
+                        <img src="/img/ftc-preview.jpeg" alt="Mentoreo FTC">
+                        <h3>RBK7FTC - Mentoreo</h3>
+                        <p>6to puesto y clasificación internacional a México. Optimización técnica para alto rendimiento.</p>
+                        <a href="/portfolio" class="btn" style="width: 100%; margin-top: auto;">Ver Más</a>
+                    </div>
+
+                </div>
+                
+                <button class="carousel-btn btn-next" aria-label="Siguiente" style="right: 0;">&#8250;</button>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/portfolio" class="btn btn-fill">Explorar todo el Portfolio</a>
+            </div>
+        </section>
+
+        <!-- 02. STORE (COMING SOON) -->
+        <section id="store">
+            <h2 class="section-title"><span>02.</span> Store</h2>
+            <div class="coming-soon-wrapper">
+                <div class="blur-content grid">
+                    <div class="card store-card">
+                        <img src="/img/titancore.png" alt="TitanCore 7960">
+                        <h3>TitanCore 7960</h3>
+                        <span class="price">USD 45.00</span>
+                    </div>
+                </div>
+                <div class="coming-soon-badge">COMING SOON</div>
+            </div>
+        </section>
+
+        <!-- 03. OPEN SOURCE -->
+        <section id="opensource">
+            <h2 class="section-title"><span>03.</span> Open Source</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Driver de Motores Libre</h3>
+                    <p>Diseño de driver open source para robots de combate.</p>
+                    <div class="tech-stack"><span>KiCad</span> <span>Power</span></div>
+                    <div style="display: flex; gap: 10px; margin-top: auto;">
+                        <a href="https://github.com/Aid-Code" target="_blank" class="btn" style="flex:1;">GitHub</a>
+                        <a href="/contribuciones/driver" class="btn btn-fill" style="flex:1;">Ver Blog</a>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/contribuciones" class="btn">Ver Todas las Contribuciones</a>
+            </div>
+        </section>
+
+        <!-- 04. CONTACTO -->
+        <section id="contacto" style="padding-bottom: 5rem;">
+            <div style="text-align: center; border: 1px solid var(--border-color); padding: 3rem; border-radius: 8px; background: var(--card-bg);">   
+                <h1 class="section-title"><span>04.</span> Contacto</h1>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Completá el formulario para consultas sobre desarrollos de hardware, clases o colaboraciones.</p>
+                
+                <form style="display: flex; flex-direction: column; gap: 1rem;">
+                    <input type="text" placeholder="Nombre / Alias" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 4px;" required>
+                    <input type="email" placeholder="Email" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 4px;" required>
+                    <textarea placeholder="Mensaje de transmisión..." rows="5" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 4px; resize: vertical;" required></textarea>
+                    <button type="submit" class="btn btn-fill" style="width: 100%; padding: 1rem; font-size: 1.1rem;">Enviar Mensaje</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="links" style="padding-bottom: 5rem;">
+                <div style="text-align: center; border: 1px solid var(--border-color); padding: 3rem; border-radius: 8px; background: var(--card-bg);">
+                    <h2 style="margin-bottom: 1rem;">Links & Redes</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">Explorá mi contenido, repositorios y redes sociales en un solo lugar.</p>
+                    <a href="/links" class="btn btn-fill" style="padding: 1rem 3rem; font-size: 1.1rem;">Ver Links & Redes</a>
+                </div>
+            </section>
+    </main>
+
+    <!-- SCRIPT CARRUSEL Y PARALLAX -->
+    <script is:inline>
+        // --- 1. PARALLAX ---
+        const parallaxBg = document.querySelector('.parallax-bg');
+        if (parallaxBg) {
+            window.addEventListener('mousemove', (e) => {
+                const moveX = (e.clientX / window.innerWidth - 0.5) * -10;
+                const moveY = (e.clientY / window.innerHeight - 0.5) * -10;
+                parallaxBg.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        }
+
+        // --- 2. CARRUSEL INFINITO A PRUEBA DE FALLOS ---
+        const track = document.getElementById('portfolio-track');
+        const btnPrev = document.querySelector('.btn-prev');
+        const btnNext = document.querySelector('.btn-next');
+
+        if (track) {
+            let isMoving = false;
+            const EASE = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+
+            // Lee el gap real del CSS de forma dinámica
+            const getGap = () => {
+                const g = window.getComputedStyle(track).columnGap || window.getComputedStyle(track).gap;
+                return parseFloat(g) || 0;
+            };
+            const getMoveAmount = () => track.firstElementChild.offsetWidth + getGap();
+
+            // Espera el fin de la animación del TRACK, ignorando el burbujeo de las cards
+            const onTrackEnd = (cb) => {
+                const handler = (e) => {
+                    if (e.target !== track || e.propertyName !== 'transform') return;
+                    track.removeEventListener('transitionend', handler);
+                    clearTimeout(fallback);
+                    cb();
+                };
+                // Red de seguridad si el navegador pierde el foco
+                const fallback = setTimeout(() => {
+                    track.removeEventListener('transitionend', handler);
+                    cb();
+                }, 1000);
+                track.addEventListener('transitionend', handler);
+            };
+
+            // Aplica un transform sin animar garantizando el renderizado
+            const setInstant = (value) => new Promise(resolve => {
+                track.style.transition = 'none';
+                track.style.transform = value;
+                requestAnimationFrame(() => requestAnimationFrame(resolve));
+            });
+
+            const moveNext = () => {
+                if (isMoving) return;
+                isMoving = true;
+
+                track.style.transition = EASE;
+                track.style.transform = `translateX(-${getMoveAmount()}px)`;
+
+                onTrackEnd(async () => {
+                    track.appendChild(track.firstElementChild);
+                    await setInstant('translateX(0)');
+                    isMoving = false;
+                });
+            };
+
+            const movePrev = async () => {
+                if (isMoving) return;
+                isMoving = true;
+
+                track.prepend(track.lastElementChild);
+                await setInstant(`translateX(-${getMoveAmount()}px)`);
+
+                track.style.transition = EASE;
+                track.style.transform = 'translateX(0)';
+
+                onTrackEnd(() => { isMoving = false; });
+            };
+
+            let autoScroll = setInterval(moveNext, 4000);
+            const resetScroll = () => {
+                clearInterval(autoScroll);
+                autoScroll = setInterval(moveNext, 4000);
+            };
+
+            track.addEventListener('mouseenter', () => clearInterval(autoScroll));
+            track.addEventListener('mouseleave', resetScroll);
+
+            btnNext.addEventListener('click', () => { moveNext(); resetScroll(); });
+            btnPrev.addEventListener('click', () => { movePrev(); resetScroll(); });
+        }
+    </script>
+</Layout>

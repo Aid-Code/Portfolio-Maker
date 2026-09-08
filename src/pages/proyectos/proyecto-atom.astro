@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Proyecto AT0M | Aiden">
+    
+    <!-- FIX CLAVE: 'is:inline' evita que Astro rompa el script del visor 3D -->
+    <Fragment slot="head">
+        <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js" is:inline></script>
+    </Fragment>
+
+    <main>
+        <section>
+            <div class="project-header">
+                <p class="mono" style="color: var(--accent-primary);">&gt; Categoria: Robótica Competitiva</p>
+                <h1 style="font-size: 3.5rem;">Proyecto AT0M</h1>
+                <div class="tech-stack" style="margin-top: 1rem;">
+                    <span>KiCad</span> <span>ESP32-S2 Mini</span> <span>C++</span> <span>Onshape</span>
+                </div>
+                
+                <div class="3d-viewer-container">
+                    <model-viewer 
+                        src="/3d/atom-3.glb" 
+                        camera-controls 
+                        auto-rotate 
+                        shadow-intensity="1"
+                        environment-image="neutral"
+                        exposure="0.5"
+                        orientation="0deg -90deg 0deg" 
+                        rotation-per-second="-30deg"
+                        camera-orbit="auto auto 70%">
+
+                        <div slot="poster" class="loader-3d">
+                            <div class="spinner"></div>
+                            <span>Ensamblando modelo...</span>
+                        </div>
+                    </model-viewer>
+                    <p class="mono" style="font-size: 0.8rem; text-align: center; color: var(--text-muted); margin-top: 10px;">
+                        Arrastrá para rotar • Scroll para hacer zoom
+                    </p>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h3>El Desafío</h3>
+                <p>AT0M nació como un robot sumo de competencia pensado para maximizar la tracción y el tiempo de respuesta. El diseño requería una integración perfecta entre la potencia bruta de los motores y la precisión de los sensores de pista.</p>
+                
+                <h3>Desarrollo de Hardware</h3>
+                <p>Todo el hardware fue diseñado desde cero. El cerebro del sistema utiliza un microcontrolador ESP32-S2 Mini. Durante el desarrollo del esquemático, fue crucial mapear correctamente los periféricos, aprovechando específicamente los dos canales de conversión digital a analógica (DAC) ubicados en los pines 17 y 18 para ajustar la sensibilidad de los sensores infrarrojos dinámicamente.</p>
+                
+                <h3>Aplicación de Control</h3>
+                <p>Para complementar el hardware, desarrollé una aplicación móvil de debugging y telemetría. Esto permite ajustar los parámetros de combate y la estrategia de Atom segundos antes de entrar a la pista, brindando una ventaja táctica invaluable.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- FIX CLAVE: 'is:inline' para el script local también -->
+    <script is:inline>
+        const viewers = document.querySelectorAll('model-viewer');
+        viewers.forEach(viewer => {
+            viewer.addEventListener('load', () => {
+                viewer.minimumRenderScale = 1;
+            });
+        });
+    </script>
+</Layout>

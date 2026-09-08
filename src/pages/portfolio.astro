@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Portfolio Completo | Aiden">
+    <main style="padding-top: 120px;">
+        <section>
+            <h1 class="section-title"><span>></span> Portfolio & Proyectos</h1>
+            <p style="color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem;">
+                Una colección de mis desarrollos más destacados en robótica competitiva, diseño de hardware y educación tecnológica.
+            </p>
+
+            <div class="grid">
+                <!-- Tarjeta 1: Proyecto AT0M -->
+                <div class="card">
+                    <img src="/img/atom-preview.jpg" alt="Robot Sumo Atom">
+                    <h3>Proyecto AT0M</h3>
+                    <p>Diseño y desarrollo integral de un robot sumo autónomo de alta competencia. Enrutamiento de PCB customizada utilizando el microcontrolador ESP32-S2 Mini y diseño 3D de la carcasa para optimizar la tracción y el espacio.</p>
+                    <div class="tech-stack">
+                        <span>KiCad</span> <span>ESP32-S2 Mini</span> <span>C++</span> <span>Onshape</span>
+                    </div>
+                    <a href="/proyectos/proyecto-atom" class="btn" style="width: 100%; margin-top: auto;">Ver Detalles 3D</a>
+                </div>
+
+                <!-- Tarjeta 2: Escuela Tekné / Robokids -->
+                <div class="card">
+                    <img src="/img/diseño-robokids-preview.png" alt="Escuela Tekné">
+                    <h3>Proyecto Tekné / Robokids</h3>
+                    <p>Planificación y dictado de Robótica de Compentencia. Diseño de currícula enfocada en cultura Maker para múltiples rangos etarios. Llevando las ideas desde la mesa de dibujo hasta la línea de ensamblaje.</p>
+                    <div class="tech-stack">
+                        <span>Educación</span> <span>Arduino</span> <span>Hardware</span> <span>Docencia</span>
+                    </div>
+                    <a href="https://robokids.com.ar/" target="_blank" class="btn" style="width: 100%; margin-top: auto;">Ver Robokids</a>
+                </div>
+
+                <!-- Tarjeta 3: Mentoreo FTC -->
+                <div class="card">
+                    <img src="/img/ftc-preview.jpeg" alt="Mentoreo FTC">
+                    <h3>RBK7FTC - Temporada Decode</h3>
+                    <p>Mentor técnico de equipo para la FIRST Tech Challenge. Alcanzamos el puesto nro 6 a nivel nacional gracias a la optimización mecánica/electrónica y conseguimos la posibilidad de ir a competir a México.</p>
+                    <div class="tech-stack">
+                        <span>Liderazgo</span> <span>Ingeniería</span> <span>CAD</span> <span>Trabajo en equipo</span>
+                    </div>
+                    <a href="https://www.instagram.com/rbk7ftc/" target="_blank" class="btn" style="width: 100%; margin-top: auto;">Ver Resultados</a>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>

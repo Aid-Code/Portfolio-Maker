@@ -1,0 +1,32 @@
+---
+---
+<header>
+    <nav>
+        <a href="/" class="logo">&gt; AIDEN_</a>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú">☰</button>
+        <div class="nav-links" id="nav-links">
+            <a href="/#portfolio">01. Portfolio</a>
+            <a href="/#store">02. Store</a>
+            <a href="/#opensource">03. Open Source</a>
+            <a href="/#contacto">04. Contacto</a>
+            <label class="theme-switch" aria-label="Cambiar tema">
+                <input type="checkbox" id="theme-toggle-checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </nav>
+</header>
+
+<!-- Lógica para abrir/cerrar el menú en celulares -->
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
+    });
+</script>
