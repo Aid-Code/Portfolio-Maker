@@ -1,32 +1,132 @@
 ---
+// El nav siempre apunta a las secciones de la landing.
+// En el home el link activo lo resuelve el scrollspy; en las subpáginas se marca
+// la sección a la que pertenece la página actual, para no perder la orientación.
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isHome = path === '/';
+
+const active = {
+    portfolio:  !isHome && (path === '/portfolio' || path.startsWith('/proyectos')),
+    store:      !isHome && (path === '/tienda' || path.startsWith('/productos')),
+    opensource: !isHome && path.startsWith('/contribuciones'),
+    links:      !isHome && path === '/links',
+};
 ---
 <header>
     <nav>
-        <a href="/" class="logo">&gt; AIDEN_</a>
+        <!-- Identidad + telemetría de sistema -->
+        <div class="brand">
+            <div class="brand-row">
+                <a href="/" class="logo">&gt; AIDEN_</a>
+                <span class="brand-badge">[SYS:ONLINE]</span>
+            </div>
+            <div class="brand-clock">
+                <span class="led led-sm beacon-pulse"></span>
+                <span>24MHz SYS_CLK // STABLE</span>
+            </div>
+        </div>
+
         <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú">☰</button>
+
         <div class="nav-links" id="nav-links">
-            <a href="/#portfolio">01. Portfolio</a>
-            <a href="/#store">02. Store</a>
-            <a href="/#opensource">03. Open Source</a>
-            <a href="/#contacto">04. Contacto</a>
-            <label class="theme-switch" aria-label="Cambiar tema">
+            <a href="/#portfolio" class={active.portfolio ? 'is-active' : undefined}
+               aria-current={active.portfolio ? 'page' : undefined}>[01. Portfolio]</a>
+            <a href="/#store" class={active.store ? 'is-active' : undefined}
+               aria-current={active.store ? 'page' : undefined}>[02. Store]</a>
+            <a href="/#opensource" class={active.opensource ? 'is-active' : undefined}
+               aria-current={active.opensource ? 'page' : undefined}>[03. Open Source]</a>
+            <a href="/#contacto">[04. Contacto]</a>
+            <a href="/#links" class={active.links ? 'is-active' : undefined}
+               aria-current={active.links ? 'page' : undefined}>[Links &amp; Redes]</a>
+        </div>
+
+        <div class="nav-actions">
+            <!-- SW_01 // THEME_SEL [DARK/LIGHT] : switch SPDT -->
+            <label class="theme-switch" title="SW_01 // THEME_SEL [DARK/LIGHT]" aria-label="Cambiar tema">
                 <input type="checkbox" id="theme-toggle-checkbox">
+                <span class="sw-pins" aria-hidden="true">
+                    <span class="sw-pin"></span>
+                    <span class="sw-label">SW1</span>
+                    <span class="sw-pin"></span>
+                </span>
                 <span class="slider"></span>
+                <span class="sw-status" aria-hidden="true">
+                    <span class="sw-led"></span>
+                    <span class="sw-status-lbl on-dark">PWR</span>
+                    <span class="sw-status-lbl on-light">UV_ON</span>
+                </span>
             </label>
+
+            <a href="/archivos/Aiden_CV.pdf" download="Aiden_CV_Hardware_Dev.pdf" class="btn-hex">
+                <span class="copper">[↓]</span> CV.hex
+            </a>
+            <a href="/tienda" class="btn-cta nav-cta-desktop">[Tienda]</a>
         </div>
     </nav>
 </header>
 
-<!-- Lógica para abrir/cerrar el menú en celulares -->
 <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- Menú hamburguesa ---
         const menuToggle = document.getElementById('menu-toggle');
         const navLinks = document.getElementById('nav-links');
-        
+
         if (menuToggle && navLinks) {
             menuToggle.addEventListener('click', () => {
                 navLinks.classList.toggle('active');
             });
+            // Al elegir una sección, cerrar el drawer
+            navLinks.querySelectorAll('a').forEach(a => {
+                a.addEventListener('click', () => navLinks.classList.remove('active'));
+            });
         }
+
+        // --- Scrollspy: ilumina la sección visible ---
+        // Sólo corre donde existen las secciones (la landing). En las subpáginas
+        // el link activo ya viene marcado desde el servidor.
+        const links = Array.from(document.querySelectorAll('.nav-links a[href^="/#"]'));
+        const targets = links
+            .map(a => ({ a, el: document.getElementById(a.getAttribute('href').slice(2)) }))
+            .filter(t => t.el);
+
+        if (targets.length === 0) return;
+
+        let current = null;
+        const setActive = (a) => {
+            if (a === current) return;
+            links.forEach(l => {
+                l.classList.remove('is-active');
+                l.removeAttribute('aria-current');
+            });
+            if (a) {
+                a.classList.add('is-active');
+                a.setAttribute('aria-current', 'true');
+            }
+            current = a;
+        };
+
+        const headerH = () => (document.querySelector('header')?.offsetHeight ?? 64) + 24;
+
+        const update = () => {
+            const y = window.scrollY + headerH();
+            const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 2;
+            let found = null;
+            for (const t of targets) {
+                if (t.el.getBoundingClientRect().top + window.scrollY <= y) found = t.a;
+            }
+            // Al final de la página, marcar siempre la última sección
+            setActive(atBottom ? targets[targets.length - 1].a : found);
+        };
+
+        let ticking = false;
+        const onScroll = () => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => { update(); ticking = false; });
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        update();
     });
 </script>
