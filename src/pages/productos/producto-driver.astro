@@ -1,0 +1,127 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="TitanCore-7960 | Aiden Store">
+    
+    <!-- Script necesario para que funcione el visor 3D en Astro -->
+    <Fragment slot="head">
+        <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    </Fragment>
+
+    <main class="main-content-wrapper" style="padding-top: 120px; max-width: 1200px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem;">
+        
+        <p class="mono" style="color: var(--accent-primary);">&gt; Catálogo / Módulos de Potencia / Driver V2</p>
+        
+        <div class="product-detail-grid">
+            
+            <!-- COLUMNA IZQUIERDA: VISOR 3D -->
+            <div class="viewer-3d-container">
+                <model-viewer 
+                    src="/3d/titancore_7960.glb" 
+                    camera-controls 
+                    auto-rotate 
+                    shadow-intensity="0.6"
+                    shadow-softness="1"
+                    environment-image="neutral"
+                    exposure="1.2"
+                    orientation="deg 30deg 20deg" >
+
+                    <div slot="poster" class="loader-3d">
+                        <div class="spinner"></div>
+                        <span>Ensamblando modelo...</span>
+                    </div>
+                </model-viewer>
+                <p class="mono" style="font-size: 0.8rem; text-align: center; color: var(--text-muted); margin-top: 10px;">
+                    Arrastrá para rotar • Scroll para hacer zoom
+                </p>
+            </div>
+
+            <!-- COLUMNA DERECHA: INFO Y ENCARGO -->
+            <div class="product-info-panel">
+                <h1>TitanCore-7960</h1>
+                <div class="tech-stack" style="margin-bottom: 1rem;">
+                    <span>Open Hardware</span>
+                    <span>High Power</span>
+                </div>
+                
+                <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1.5rem;">
+                    Driver optimizado para robots de combate y tracción pesada. Seleccioná el formato de entrega que mejor se adapte a tu taller.
+                </p>
+
+                <!-- SELECTOR DE FORMATO -->
+                <div style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <label for="tier-select" style="display: block; font-family: 'Fira Code', monospace; color: var(--accent-primary); margin-bottom: 0.5rem;">[ Seleccionar Formato ]</label>
+                    <select id="tier-select" style="width: 100%; padding: 0.8rem; background: var(--bg-color); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 4px; font-size: 1rem; margin-bottom: 1rem; cursor: pointer;">
+                        <option value="pcb">01. Solo PCB Vacía - USD $5.00</option>
+                        <option value="diy">02. Kit DIY (PCB + Componentes) - USD $18.00</option>
+                        <option value="full">03. Ensamblado y Testeado - USD $28.00</option>
+                    </select>
+                    
+                    <p id="tier-desc" style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        Ideal para quienes ya tienen sus propios componentes. Solo se envía la placa de circuito impreso fabricada.
+                    </p>
+
+                    <!-- BOTÓN DE ENCARGO (EFECTO COMING SOON) -->
+                    <div style="position: relative; width: 100%; overflow: hidden; border-radius: 4px; margin-top: 1rem;">
+                        <!-- Capa del botón original blureado (inhabilitado) -->
+                        <div style="filter: blur(4px); opacity: 0.6; pointer-events: none;">
+                            <div class="btn btn-fill" style="display: block; text-align: center; font-size: 1.1rem; padding: 1rem; width: 100%;">
+                                Solicitar Encargo
+                            </div>
+                        </div>
+                        
+                        <!-- Capa del cartel superpuesto -->
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.2rem; color: var(--accent-primary); background: var(--bg-color); padding: 0.4rem 1.2rem; border-radius: 4px; border: 2px solid var(--accent-primary); font-family: 'Fira Code', monospace; font-weight: bold; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                            COMING SOON
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border-left: 3px solid var(--accent-secondary); padding-left: 1rem; margin-bottom: 2rem;">
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">
+                        <strong>Aviso de Fabricación:</strong> Al ser módulos a pedido, la fabricación de las PCBs se realiza en el exterior. Los tiempos de entrega varían entre 3 y 4 semanas. Envíos al interior o entregas a coordinar por CABA (Flores/Centro).
+                    </p>
+                </div>
+
+                <h3>Especificaciones Técnicas</h3>
+                <ul class="specs-list">
+                    <li><strong>Voltaje de Operación:</strong> 6V - 28V DC</li>
+                    <li><strong>Corriente Continua:</strong> 40A por canal</li>
+                    <li><strong>Corriente Pico:</strong> 120A (por 2 segundos)</li>
+                    <li><strong>Interfaz Lógica:</strong> PWM/DIR compatible con 3.3V y 5V</li>
+                    <li><strong>Protecciones:</strong> Sobrecalentamiento, bajo voltaje y cortocircuito.</li>
+                </ul>
+            </div>
+            
+        </div>
+    </main>
+
+    <!-- Script para dinamismo del select -->
+    <script is:inline>
+        const select = document.getElementById('tier-select');
+        const desc = document.getElementById('tier-desc');
+        
+        const descriptions = {
+            'pcb': 'Ideal para quienes ya tienen sus propios componentes. Solo se envía la placa de circuito impreso fabricada.',
+            'diy': 'La experiencia Maker completa. Incluye la PCB desnuda y todos los componentes SMD/THT necesarios para que la sueldes en tu taller.',
+            'full': 'Lista para la pista. La placa se entrega con todos los componentes soldados a mano, testeada en banco de pruebas y lista para integrar.'
+        };
+
+        if (select && desc) {
+            select.addEventListener('change', (e) => {
+                desc.textContent = descriptions[e.target.value];
+            });
+        }
+    </script>
+
+    <!-- Script para forzar resolución al rotar -->
+    <script>
+        const viewers = document.querySelectorAll('model-viewer');
+        viewers.forEach(viewer => {
+            viewer.addEventListener('load', () => {
+                viewer.minimumRenderScale = 1;
+            });
+        });
+    </script>
+</Layout>

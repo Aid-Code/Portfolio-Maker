@@ -14,7 +14,7 @@ import Layout from '../layouts/Layout.astro';
             <div class="hero-buttons">
                 <a href="/archivos/Aiden_CV.pdf" download="Aiden_CV_Hardware_Dev.pdf" class="btn btn-fill">[↓] Descargar CV</a>
                 <a href="/tienda" class="btn">Ir a la Tienda</a>
-                <a href="/contacto" class="btn">Contactarse</a>
+                <a href="/#contacto" class="btn">Contactarse</a>
             </div>
         </section>
 
@@ -29,7 +29,7 @@ import Layout from '../layouts/Layout.astro';
                         <img src="/img/atom-preview.jpg" alt="Robot Sumo Atom">
                         <h3>Proyecto AT0M</h3>
                         <p>Diseño integral de robot sumo autónomo de competencia.</p>
-                        <a href="/proyectos/proyecto-atom" class="btn" style="width: 100%; margin-top: auto;">Ver Detalles</a>
+                        <a href="/proyectos/proyecto-atom" class="btn" style="width: 100%; margin-top: auto;">Ver DevBlog</a>
                     </div>
                     <div class="card" style="flex: 0 0 320px;">
                         <img src="/img/diseño-robokids-preview.png" alt="Escuela Tekné">
@@ -41,7 +41,7 @@ import Layout from '../layouts/Layout.astro';
                         <img src="/img/ftc-preview.jpeg" alt="Mentoreo FTC">
                         <h3>RBK7FTC - Mentoreo</h3>
                         <p>6to puesto y clasificación internacional a México. Optimización técnica para alto rendimiento.</p>
-                        <a href="/portfolio" class="btn" style="width: 100%; margin-top: auto;">Ver Más</a>
+                        <a href="/proyectos/proyecto-rbk7ftc" class="btn" style="width: 100%; margin-top: auto;">Ver DevBlog</a>
                     </div>
                 </div>
                 
@@ -72,12 +72,12 @@ import Layout from '../layouts/Layout.astro';
             <h2 class="section-title"><span>03.</span> Open Source</h2>
             <div class="grid">
                 <div class="card">
-                    <h3>Driver de Motores Libre</h3>
+                    <h3>TitanCore-7960 - Driver de Motores</h3>
                     <p>Diseño de driver open source para robots de combate.</p>
-                    <div class="tech-stack"><span>KiCad</span> <span>Power</span></div>
+                    <div class="tech-stack"><span>KiCad</span> <span>Hardware</span></div>
                     <div style="display: flex; gap: 10px; margin-top: auto;">
                         <a href="https://github.com/Aid-Code" target="_blank" class="btn" style="flex:1;">GitHub</a>
-                        <a href="/contribuciones/driver" class="btn btn-fill" style="flex:1;">Ver Blog</a>
+                        <a href="/contribuciones/driver" class="btn btn-fill" style="flex:1;">Ver DevBlog</a>
                     </div>
                 </div>
             </div>
@@ -92,10 +92,14 @@ import Layout from '../layouts/Layout.astro';
                 <h1 class="section-title"><span>04.</span> Contacto</h1>
                 <p style="color: var(--text-muted); margin-bottom: 2rem;">Completá el formulario para consultas sobre desarrollos de hardware, clases o colaboraciones.</p>
                 
-                <form style="display: flex; flex-direction: column; gap: 1rem;">
-                    <input type="text" placeholder="Nombre / Alias" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 4px;" required>
-                    <input type="email" placeholder="Email" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 4px;" required>
-                    <textarea placeholder="Mensaje de transmisión..." rows="5" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 4px; resize: vertical;" required></textarea>
+                <form action="https://formspree.io/f/xeaqpnrn" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <!-- El atributo 'name' es vital para que Formspree identifique el dato -->
+                    <input type="text" name="Nombre" placeholder="Nombre / Alias" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 4px;" required>
+                    
+                    <input type="email" name="Email" placeholder="Email" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 4px;" required>
+                    
+                    <textarea name="Mensaje" placeholder="Mensaje de transmisión..." rows="5" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 4px; resize: vertical;" required></textarea>
+                    
                     <button type="submit" class="btn btn-fill" style="width: 100%; padding: 1rem; font-size: 1.1rem;">Enviar Mensaje</button>
                 </form>
             </div>
@@ -123,24 +127,22 @@ import Layout from '../layouts/Layout.astro';
         }
 
         // --- 2. CARRUSEL MARQUEE INFINITO (CONTINUO Y SUAVE) ---
+        const track = document.getElementById('portfolio-track');
         const wrapper = document.querySelector('.carousel-wrapper');
+        const btnPrev = document.querySelector('.btn-prev');
+        const btnNext = document.querySelector('.btn-next');
 
         if (track && wrapper) {
-            // Guardamos las tarjetas "reales" antes de clonar nada
             const originalCards = Array.from(track.children);
             const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 0;
 
             let uniqueWidth = 0;
 
-            // Calcula cuántas copias hacen falta para llenar la pantalla (funciona con 2 o con 30 proyectos)
             function ensureEnoughClones() {
-                // Limpia clones previos (por si cambia el tamaño de ventana)
                 track.querySelectorAll('[data-clone="true"]').forEach(el => el.remove());
 
                 uniqueWidth = originalCards.reduce((acc, el) => acc + el.getBoundingClientRect().width + gap, 0);
                 const wrapperWidth = wrapper.getBoundingClientRect().width;
-
-                // Suficientes copias para cubrir 2 pantallas de ancho (buffer para que nunca se vea vacío)
                 const copiesNeeded = Math.max(1, Math.ceil((wrapperWidth * 2) / uniqueWidth));
 
                 for (let i = 0; i < copiesNeeded; i++) {
@@ -154,12 +156,14 @@ import Layout from '../layouts/Layout.astro';
                 }
             }
 
+            // Espera a que las imágenes tengan tamaño antes de medir
+            window.addEventListener('load', ensureEnoughClones);
             ensureEnoughClones();
 
             let offset = 0;
-            let target = null;      // cuando no es null, estamos "frenando" hacia un punto (click en flecha)
+            let target = null;
             let paused = false;
-            const AUTO_SPEED = 0.4; // velocidad del deslizamiento automático (px por frame)
+            const AUTO_SPEED = 0.6;
 
             function frame() {
                 if (target !== null) {
@@ -168,15 +172,23 @@ import Layout from '../layouts/Layout.astro';
                         offset = target;
                         target = null;
                     } else {
-                        offset += diff * 0.12; // easing suave hacia el target
+                        offset += diff * 0.12;
                     }
                 } else if (!paused) {
                     offset -= AUTO_SPEED;
                 }
 
-                // Wrap infinito: al pasar el ancho de un set completo, reseteamos sin que se note
-                if (offset <= -uniqueWidth) offset += uniqueWidth;
-                if (offset > 0) offset -= uniqueWidth;
+                // Wrap infinito: si el offset se resetea, el target tiene que corregirse igual
+                if (uniqueWidth > 0) {
+                    while (offset <= -uniqueWidth) {
+                        offset += uniqueWidth;
+                        if (target !== null) target += uniqueWidth;
+                    }
+                    while (offset > 0) {
+                        offset -= uniqueWidth;
+                        if (target !== null) target -= uniqueWidth;
+                    }
+                }
 
                 track.style.transform = `translateX(${offset}px)`;
                 requestAnimationFrame(frame);
@@ -190,12 +202,12 @@ import Layout from '../layouts/Layout.astro';
                 return originalCards[0].getBoundingClientRect().width + gap;
             }
 
-            btnNext.addEventListener('click', () => {
+            if (btnNext) btnNext.addEventListener('click', () => {
                 const base = target !== null ? target : offset;
                 target = base - stepWidth();
             });
 
-            btnPrev.addEventListener('click', () => {
+            if (btnPrev) btnPrev.addEventListener('click', () => {
                 const base = target !== null ? target : offset;
                 target = base + stepWidth();
             });

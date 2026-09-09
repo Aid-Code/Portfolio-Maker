@@ -1,10 +1,9 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 ---
 
 <Layout title="Proyecto AT0M | Aiden">
     
-    <!-- FIX CLAVE: 'is:inline' evita que Astro rompa el script del visor 3D -->
     <Fragment slot="head">
         <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js" is:inline></script>
     </Fragment>
@@ -14,16 +13,151 @@ import Layout from '../layouts/Layout.astro';
             <div class="project-header">
                 <p class="mono" style="color: var(--accent-primary);">&gt; Categoria: Robótica Competitiva</p>
                 <h1 style="font-size: 3.5rem;">Proyecto AT0M</h1>
-                <div class="tech-stack" style="margin-top: 1rem;">
-                    <span>KiCad</span> <span>ESP32-S2 Mini</span> <span>C++</span> <span>Onshape</span>
-                </div>
+                <p style="font-size: 1.2rem; color: var(--text-muted);">Diario de desarrollo de un robot sumo autónomo de alta competencia.</p>
                 
-                <div class="3d-viewer-container">
+                <div class="tech-stack" style="margin-top: 1rem; margin-bottom: 2rem;">
+                    <span>KiCad</span> <span>ESP32 Devkit</span> <span>C++</span> <span>Onshape</span>
+                </div>
+
+                <!-- Visor 3D  (V2) -->
+                <div class="viewer-3d-container" style="margin-bottom: 4rem;">
+                    <h3 class="mono" style="margin-bottom: 1rem; font-size: 1rem; color: var(--text-muted);">// Modelo Histórico: AT0M V2</h3>
+                    <model-viewer 
+                        src="/3d/atom-v2.glb" 
+                        camera-controls 
+                        auto-rotate 
+                        shadow-intensity="0.6"
+                        shadow-softness="1"
+                        environment-image="neutral"
+                        exposure="0.5"
+                        orientation="0deg -90deg 0deg"
+                        camera-orbit="auto auto 70%">
+                        <div slot="poster" class="loader-3d">
+                            <div class="spinner"></div>
+                            <span>Cargando modelo V2...</span>
+                        </div>
+                    </model-viewer>
+                </div>
+            </div>
+
+            <div class="project-content">
+                
+                <!-- SECCIÓN: EL ORIGEN Y V2 -->
+                <h2 class="chapter-title">01. Origen </h2>
+                
+                <p>
+                    AT0M nació como un robot sumo de competencia pensado para rebelarse contra los diseños típicos. Empezó siendo un robot lento hecho con componentes que tenía en mi casa. Hoy, está enfocado en maximizar la tracción y el tiempo de respuesta. <br> 
+                    El diseño original fue pensado para optimizar el espacio y el ensamblaje del mismo, pudiendo dividirse en dos partes para acceder más fácil al interior. En la versión anterior (V2), el enfoque estaba puesto en validar la lógica de combate y la distribución de peso. <br>
+                    Aunque este acercamiento al objetivo cumplía su función, todavía le faltaba fuerza y velocidad, y una estructura más robusta que le permitiera ganar.
+                    Para cumplir el nuevo objetivo de este robot y ganar fuerza, estaba limitado por mi driver de motores (L298, como se ve en la PCB), pero todo lo que encontraba comercialmente para reemplazarlo o era muy grande, o caro, o no se conseguía en Argentina. <br>
+                    De acá, nació la idea que al final dió lugar al <a href="/contribuciones/titancore" class="link-resaltado">TitanCore-7960.</a>
+                </p>
+
+                <h2 class="chapter-title">02. Hardware y Desarrollo </h2>
+
+                <p>
+                    Todo el diseño y desarrollo del hardware fue desde cero y completamente hecho y pensado por mi, claramente pensando tambien en ciertas limitaciones de presupuesto. <br>
+                    Fue por esto y un par de razones más, como por ejemplo que comercialmente no se conseguían otras opciones en Argentina, que me terminé decantando por el L298 como mi driver de motores. <br>
+
+                </p>
+
+                <!-- Grid de imágenes V2 -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0;">
+                    <figure style="margin: 0;">
+                        <img src="/img/atom-v2-schematic.svg" alt="Esquemático Atom V2" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <figcaption class="mono" style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem;">Esquemático V2</figcaption>
+                    </figure>
+                    <figure style="margin: 0;">
+                        <img src="/img/atom-v2-pcb.svg" alt="PCB Atom V2" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <figcaption class="mono" style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem;">PCB V2 en KiCad</figcaption>
+                    </figure>
+                </div>
+
+                <!-- Visor 3D: PCB AT0M V2 -->
+                <div class="viewer-3d-container" style="margin-bottom: 4rem;">
+                    <h3 class="mono" style="margin-bottom: 1rem; font-size: 1rem; color: var(--text-muted);">// PCB: AT0M V2</h3>
+                    <model-viewer 
+                        src="/3d/atom-v2-pcb.glb" 
+                        camera-controls 
+                        auto-rotate 
+                        shadow-intensity="0.6"
+                        shadow-softness="1"
+                        environment-image="neutral"
+                        exposure="0.5"
+                        style="height: 450px;"
+                        orientation="0deg 30deg 15deg"
+                        camera-orbit="auto auto 80%">
+                        <div slot="poster" class="loader-3d">
+                            <div class="spinner"></div>
+                            <span>Cargando modelo PCB...</span>
+                        </div>
+                    </model-viewer>
+                    <p class="mono" style="font-size: 0.8rem; text-align: center; color: var(--text-muted); margin-top: 10px;">
+                        Arrastrá para rotar • Scroll para hacer zoom
+                    </p>
+                </div>
+
+                <p>
+                    Por otro lado, este robot utilizaba sensores ultrasónicos (HC-SR04), que por más queridos que sean por la comunidad, nunca me resultaron tan confiables ni rápidos. Por alguna razón, siempre algún sensor se me jodía. <br>
+                    A partir de ahí, decidí que también iba a buscar otro enfoque para sensar al contrincante.
+                </p>
+
+                <!-- SECCIÓN: HARDWARE Y CÓDIGO -->
+                <h2 class="chapter-title">03. Software y Estrategias </h2>
+                
+                <p>
+                    Así como el hardware, todo el software fue desarrollado por mi, basado en C++ y utilizando la extensión PlatformIO en VSCode. <br>
+                    Creo que lo que más tengo para destacar del software es: el seteo de una <strong>dirección de arranque</strong> y el uso de estrategias. Me resulta extraño lo poco que veo en las competencias robots que configuren una dirección de arranque.<br>
+                    <strong>¿A que me refiero con esto?</strong> La dirección de arranque es el ángulo al cual va a girar tu robot apenas pasen los 5 segundos. <br>
+                    <strong>¿De que sirve?</strong> Esto te permite que tu robot no pierda tiempo buscando al otro porque arrancó mirando para cualquier lado, y realmente el tiempo es oro en cada round.<br>
+                    Por acá va un ejemplo muy recortado de mi código:
+                </p>
+
+                <!-- Bloque de Código (fondo fijo tipo "editor", independiente del theme claro/oscuro) -->
+                <div class="code-block">
+    <div class="code-block-header">
+        <span class="mono">main.cpp</span>
+        <span class="mono" style="color: var(--accent-primary);">C++</span>
+    </div>
+<pre><code><span style="color: #c586c0;">#define</span> GIRO_IZQ_45 <span style="color: #b5cea8;">50</span> <span style="color: #6a9955;">// Definimos el tiempo en millis que nuestro robot tarda en girar esos grados</span>
+.
+.
+.
+.
+<span style="color: #c586c0;">switch</span> (direccion)
+&#123;
+  <span style="color: #569cd6;">case</span> IZQ_45:
+    <span style="color: #c586c0;">if</span> (!en_ejecucion) &#123;
+      en_ejecucion = <span style="color: #569cd6;">true</span>;
+      tiempo_inicio = ahora;
+      <span style="color: #dcdcaa;">movimiento</span>(IZQUIERDA, <span style="color: #b5cea8;">255</span>, <span style="color: #b5cea8;">255</span>);
+    &#125;
+
+    <span style="color: #c586c0;">if</span> (ahora - tiempo_inicio &gt;= GIRO_IZQ_45)
+    &#123;
+      en_ejecucion = <span style="color: #569cd6;">false</span>;
+      flag_iniciar_direccion = <span style="color: #569cd6;">false</span>;
+      flag_iniciar_strat = <span style="color: #569cd6;">true</span>;
+      tiempo_inicio = <span style="color: #b5cea8;">0</span>;
+    &#125;
+    <span style="color: #c586c0;">break</span>;
+    .
+    .
+    .
+&#125;</code></pre>
+</div>
+
+                <!-- SECCIÓN: SOFTWARE EXTERNO -->
+                <h2 class="chapter-title">04. El Futuro - AT0M V3</h2>
+
+                <div class="viewer-3d-container" style="margin-bottom: 4rem;">
+                    <h3 class="mono" style="margin-bottom: 1rem; font-size: 1rem; color: var(--text-muted);">// En desarrollo: AT0M V3 </h3>
                     <model-viewer 
                         src="/3d/atom-3.glb" 
                         camera-controls 
                         auto-rotate 
-                        shadow-intensity="1"
+                        shadow-intensity="0.6"
+                        shadow-softness="1"
                         environment-image="neutral"
                         exposure="0.5"
                         orientation="0deg -90deg 0deg" 
@@ -32,35 +166,36 @@ import Layout from '../layouts/Layout.astro';
 
                         <div slot="poster" class="loader-3d">
                             <div class="spinner"></div>
-                            <span>Ensamblando modelo...</span>
+                            <span>Ensamblando modelo V3...</span>
                         </div>
                     </model-viewer>
                     <p class="mono" style="font-size: 0.8rem; text-align: center; color: var(--text-muted); margin-top: 10px;">
                         Arrastrá para rotar • Scroll para hacer zoom
                     </p>
                 </div>
-            </div>
+                
+                <p>
+                    Gracias a los aprendizajes y conclusiones que fuimos apreciando en la versión anterior es que hoy llegué a este diseño con estas características. <br>
+                    El diseño 3D es más robusto, gracias a que es de solo una pieza, y aprovecha más el espacio sin perder ángulo de levante en la pala del frente gracias a la curvatura de sus rampas. <br>
+                    La PCB está basada en mi propio driver de motores, el <a href="/contribuciones/titancore" class="link-resaltado">TitanCore-7960</a>, lo que me permite llevar al limite a mis motores con 24v, ganando fuerza y velocidad. <br>
+                    Utilizo dos tipos de sensores infrarrojos distintos, que me dan mayor velocidad. Al estar en desarrollo, todavía no pude poner a prueba su eficiencia y confiabilidad. <br>
+                    Y por el lado de la programación, esta vez voy a utilizar un enfoque un poco distinto: voy a evaluar el uso de algoritmos de control, tal como el PID (Proporcional Integral y Derivativo) para sumo.
+                </p>
 
-            <div class="project-content">
-                <h3>El Desafío</h3>
-                <p>AT0M nació como un robot sumo de competencia pensado para maximizar la tracción y el tiempo de respuesta. El diseño requería una integración perfecta entre la potencia bruta de los motores y la precisión de los sensores de pista.</p>
-                
-                <h3>Desarrollo de Hardware</h3>
-                <p>Todo el hardware fue diseñado desde cero. El cerebro del sistema utiliza un microcontrolador ESP32-S2 Mini. Durante el desarrollo del esquemático, fue crucial mapear correctamente los periféricos, aprovechando específicamente los dos canales de conversión digital a analógica (DAC) ubicados en los pines 17 y 18 para ajustar la sensibilidad de los sensores infrarrojos dinámicamente.</p>
-                
-                <h3>Aplicación de Control</h3>
-                <p>Para complementar el hardware, desarrollé una aplicación móvil de debugging y telemetría. Esto permite ajustar los parámetros de combate y la estrategia de Atom segundos antes de entrar a la pista, brindando una ventaja táctica invaluable.</p>
             </div>
         </section>
     </main>
 
-    <!-- FIX CLAVE: 'is:inline' para el script local también -->
     <script is:inline>
         const viewers = document.querySelectorAll('model-viewer');
         viewers.forEach(viewer => {
             viewer.addEventListener('load', () => {
-                viewer.minimumRenderScale = 1;
+                viewer['minimumRenderScale'] = 1;
             });
         });
     </script>
+
+    <div style="text-align: center; margin-top: 4rem;">
+        <a href="/portfolio" class="btn btn-fill">Volver al Portfolio</a>
+    </div>
 </Layout>

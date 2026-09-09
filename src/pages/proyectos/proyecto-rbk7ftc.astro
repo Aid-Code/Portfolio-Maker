@@ -1,0 +1,100 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="RBK7FTC | Aiden Portfolio">
+    <main style="padding-top: 120px; max-width: 1000px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; padding-bottom: 5rem;">
+        
+        <!-- ENCABEZADO Y FOTO GRUPAL -->
+        <div class="project-header" style="text-align: center; margin-bottom: 4rem;">
+            <p class="mono" style="color: var(--accent-primary);">&gt; Mentoreo / FIRST Tech Challenge</p>
+            <h1 style="font-size: 3.5rem; margin-top: 0.5rem; margin-bottom: 1rem;">RBK7FTC</h1>
+            <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 700px; margin: 0 auto;">
+                Diario de un proceso increíble: mentoreando a la próxima generación de Makers desde el taller local hasta el escenario internacional.
+            </p>
+            
+            <div class="tech-stack" style="margin-top: 1.5rem; margin-bottom: 3rem; justify-content: center;">
+                <span>Liderazgo</span> <span>Ingeniería</span> <span>FTC Decode</span> <span>Trabajo en Equipo</span>
+            </div>
+            
+            <img src="/img/rbk7ftc-equipo.jpeg" alt="El equipo RBK7FTC completo" style="width: 100%; max-height: 500px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        </div>
+
+        <div class="project-content">
+
+            <!-- SECCIÓN 1: EL CAMINO A MENDOZA -->
+            <div style="display: flex; flex-wrap: wrap; gap: 3rem; align-items: center; margin-bottom: 5rem;">
+                <div style="flex: 1 1 400px;">
+                    <h2 style="color: var(--accent-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1.5rem; margin-top: 0;">01. El Camino a Mendoza</h2>
+                    <p>
+                        Todo empezó en el taller, analizando los desafíos de la temporada Decode. Como mentor, mi objetivo principal no era armar el robot por ellos, sino guiarlos en el proceso de diseño, iteración y resolución de problemas bajo presión.
+                    </p>
+                    <p>
+                        Fueron semanas de muchísimas horas de trabajo, prototipando mecanismos de recolección y puliendo el código autónomo. Armar un equipo sólido implicó no solo ajustar tuercas y soldar cables, sino también aprender a comunicarnos y a tomar decisiones estratégicas de diseño cuando el tiempo jugaba en contra.
+                    </p>
+                </div>
+                <div style="flex: 1 1 400px;">
+                    <img src="/img/rbk7ftc-mendoza-pre.jpg" alt="Proceso de armado en el taller" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color);">
+                </div>
+            </div>
+
+            <!-- SECCIÓN 2: 6TO PUESTO Y SUSTAIN AWARD -->
+            <div style="display: flex; flex-wrap: wrap; gap: 3rem; align-items: center; margin-bottom: 5rem;">
+                <div style="flex: 1 1 400px; order: 1;">
+                    <img src="/img/rbk7ftc-mendoza-resultado.jpeg" alt="Resultados en Mendoza" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color);">
+                </div>
+                <div style="flex: 1 1 400px; order: 2;">
+                    <h2 style="color: var(--accent-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1.5rem; margin-top: 0;">02. La Nacional y el Sustain Award</h2>
+                    <p>
+                        Llegar a la instancia nacional en Mendoza fue poner a prueba todo el esfuerzo del equipo. La adrenalina de los pits, las inspecciones técnicas y los nervios del primer match fueron una experiencia formativa brutal.
+                    </p>
+                    <p>
+                        Competimos contra 12 equipos de excelente nivel. A pesar de algunos contratiempos técnicos que tuvimos que resolver sobre la marcha, logramos posicionarnos en el <strong>6to lugar a nivel nacional</strong>. Además, el esfuerzo, la organización y la base sólida que construimos como grupo fueron reconocidos al ganar el codiciado <strong>Sustain Award</strong>. Estos resultados nos dieron la mayor alegría del año: clasificar para ir a competir a México.
+                    </p>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 3: PREPARACIÓN PARA MÉXICO -->
+            <div style="display: flex; flex-wrap: wrap; gap: 3rem; align-items: center; margin-bottom: 5rem;">
+                <div style="flex: 1 1 400px;">
+                    <h2 style="color: var(--accent-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1.5rem; margin-top: 0;">03. Recalculando hacia México</h2>
+                    <p>
+                        El pasaje a México significaba que el diseño de Mendoza no iba a ser suficiente para el nivel internacional. Volvimos a la mesa de dibujo. Sabíamos que teníamos que optimizar la velocidad del chasis, alivianar estructuras y mejorar la fiabilidad del hardware.
+                    </p>
+                    <p>
+                        Además del rediseño, el equipo tuvo que enfrentar el desafío de buscar sponsors, organizar la logística del viaje y preparar la documentación técnica (el Engineering Portfolio) a un estándar muchísimo más alto. Fueron meses de dormir poco y trabajar mucho.
+                    </p>
+                </div>
+                <div style="flex: 1 1 400px;">
+                    <img src="/img/rbk7ftc-preparacion-mexico.jpeg" alt="Optimizando el robot para México" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color);">
+                </div>
+            </div>
+
+            <!-- SECCIÓN 4: MÉXICO Y JUDGES CHOICE -->
+            <div style="display: flex; flex-wrap: wrap; gap: 3rem; align-items: center; margin-bottom: 5rem;">
+                <div style="flex: 1 1 600px; order: 1;">
+                    <img src="/img/rbk7ftc-mexico-final.jpeg" alt="El equipo compitiendo en México" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <figcaption class="mono" style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem;">Todas las delegaciones Argentinas festejando</figcaption>
+                </div>
+                <div style="flex: 1 1 400px; order: 2;">
+                    <h2 style="color: var(--accent-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1.5rem; margin-top: 0;">04. El Desafío Internacional</h2>
+                    <p>
+                        Competir en México fue jugar en otra liga. Conocer equipos de otros países, ver diseños mecánicos totalmente distintos a los nuestros y experimentar el verdadero espíritu colaborativo fue increíble.
+                    </p>
+                    <p>
+                        El desempeño del robot demostró cuánto habíamos crecido técnicamente, pero el mayor triunfo fue el <strong>crecimiento personal</strong> del equipo. Más allá de resolver problemas mecánicos complejos en minutos, los chicos aprendieron a crear vínculos genuinos con otras delegaciones. Para romper el hielo y fomentar esta integración, desarrollamos un proyecto innovador: un <strong>álbum virtual</strong> interactivo que compartimos con todos los participantes.
+                    </p>
+                    <p>
+                        Fue exactamente esta iniciativa, sumada al compañerismo y la creatividad para reforzar lazos entre distintas culturas, lo que deslumbró a los evaluadores y nos llevó a ganar el <strong>Judges Choice Award</strong>. Una experiencia que reafirmó mi pasión por la docencia y la robótica.
+                    </p>
+                </div>
+            </div>
+
+            <!-- BOTÓN DE REGRESO -->
+            <div style="text-align: center; margin-top: 4rem;">
+                <a href="/portfolio" class="btn btn-fill">Volver al Portfolio</a>
+            </div>
+
+        </div>
+    </main>
+</Layout>

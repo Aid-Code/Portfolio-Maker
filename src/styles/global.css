@@ -179,6 +179,44 @@ section { padding: 100px 2rem 2rem 2rem; max-width: 1200px; margin: 0 auto; }
 .project-content { color: var(--text-muted); font-size: 1.1rem; }
 .project-content h3 { color: var(--text-main); margin: 2rem 0 1rem 0; font-size: 1.5rem; }
 
+/* Títulos de capítulo dentro de un log/diario de proyecto (ej: "01. Iteraciones Anteriores") */
+.chapter-title {
+    color: var(--accent-primary);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    margin-top: 3rem;
+    font-size: 1.6rem;
+}
+
+/* Bloque de código estilo "editor": fondo fijo, independiente del theme claro/oscuro,
+   para que los colores de sintaxis (pensados para fondo oscuro) siempre se lean bien */
+.code-block {
+    background: #0d1117;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+}
+.code-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+.code-block pre {
+    margin: 0;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #e0e0e0;
+}
+
 /* --- PÁGINA DE PRODUCTO 3D --- */
 .product-detail-grid {
     display: grid;
@@ -190,19 +228,33 @@ section { padding: 100px 2rem 2rem 2rem; max-width: 1200px; margin: 0 auto; }
 
 model-viewer {
     width: 100%;
-    height: 450px;
-    background-color: rgba(9, 10, 15, 0.5);
-    border: 1px solid var(--accent-primary);
-    border-radius: 8px;
-    /* Efecto neón sutil para el contenedor 3D */
-    box-shadow: inset 0 0 20px rgba(0, 255, 204, 0.05);
+    height: 550px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    --poster-color: transparent;
+}
+
+.viewer-3d-container {
+    position: relative;
+    isolation: isolate;
+}
+.viewer-3d-container::before {
+    content: "";
+    position: absolute;
+    inset: -15%;
+    background: radial-gradient(circle at center, rgba(0, 255, 204, 0.15), transparent 65%);
+    filter: blur(30px);
+    z-index: -1;
+    pointer-events: none;
 }
 
 /* Estilos para la pantalla de carga 3D */
 .loader-3d {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     display: flex; flex-direction: column; justify-content: center; align-items: center;
-    background-color: var(--card-bg); color: var(--accent-primary);
+    background-color: transparent; color: var(--accent-primary);
     font-family: 'Fira Code', monospace; z-index: 10;
 }
 .spinner {
@@ -274,6 +326,21 @@ model-viewer {
     
     .nav-links a { margin: 0.5rem 0; text-align: center; width: 100%; }
     .theme-toggle { margin: 1rem auto; display: block; }
+}
+
+/* --- ENLACES EN TEXTO --- */
+.link-resaltado {
+    color: var(--accent-primary);
+    font-weight: bold;
+    text-decoration: none;
+    padding: 0 4px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.link-resaltado:hover {
+    background-color: rgba(0, 255, 204, 0.15); /* Fondo cian sutil */
+    box-shadow: 0 0 8px rgba(0, 255, 204, 0.3); /* Brillo neón */
 }
 
 /* --- INTERRUPTOR DE TEMA (TOGGLE SWITCH) --- */
