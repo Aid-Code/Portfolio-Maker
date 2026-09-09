@@ -116,7 +116,7 @@ import Layout from '../../layouts/Layout.astro';
     </script>
 
     <!-- Script para forzar resolución al rotar -->
-    <script>
+    <script is:inline>
         const viewers = document.querySelectorAll('model-viewer');
         viewers.forEach(viewer => {
             viewer.addEventListener('load', () => {
